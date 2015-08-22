@@ -1,0 +1,9 @@
+Package: com.daniilpashin.wgradremover
+Name: WGradRemover
+Depends: mobilesubstrate
+Version: 1.0
+Architecture: iphoneos-arm
+Description: Removes ugly gradient from your wallpaper
+Maintainer: Daniil Pashin
+Author: Daniil Pashin
+Section: Tweaks
