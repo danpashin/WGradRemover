@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>entry</key>
+	<dict>
+		<key>cell</key>
+		<string>PSSwitchCell</string>
+		<key>label</key>
+		<string>WGradRemover</string>
+		<key>key</key>
+		<string>enabled</string>
+		<key>default</key>
+		<true/>
+		<key>defaults</key>
+		<string>com.daniilpashin.wgradremover</string>
+		<key>PostNotification</key>
+		<string>com.daniilpashin.wgradremover.prefs.changed</string>
+		<key>icon</key>
+		<string>WGR_icon.png</string>
+	</dict>
+</dict>
+</plist>
