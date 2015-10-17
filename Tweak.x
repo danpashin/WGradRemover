@@ -34,6 +34,19 @@ static NSString *notificationString = @"com.daniilpashin.wgradremover.prefs.chan
 
 
 
+// Thanks sinfool (goin730@gmail.com) for this method
+%hook SBFColorBoxes
+
+- (float) contrast {
+if (enabled) return 0;
+    return %orig;
+}
+%end
+// Thanks sinfool (goin730@gmail.com) for this method
+
+
+
+
 static void notificationCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
     NSNumber *n = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"enabled" inDomain:@"com.daniilpashin.wgradremover"];
     enabled = (n)? [n boolValue]:YES;
