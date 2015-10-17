@@ -35,10 +35,13 @@ static NSString *notificationString = @"com.daniilpashin.wgradremover.prefs.chan
 
 
 // Thanks sinfool (goin730@gmail.com) for this method
+
+ // For iOS 9.0
+
 %hook SBFColorBoxes
 
 - (float) contrast {
-if (enabled) return 0;
+    if (enabled) return 0;
     return %orig;
 }
 %end
