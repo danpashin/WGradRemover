@@ -5,6 +5,7 @@ include theos/makefiles/common.mk
 
 TWEAK_NAME = WGradRemover
 WGradRemover_FILES = Tweak.x
+WGradRemover_FRAMEWORKS = UIKit
 
 
 include $(THEOS_MAKE_PATH)/tweak.mk

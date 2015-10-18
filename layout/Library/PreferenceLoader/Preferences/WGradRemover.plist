@@ -5,19 +5,150 @@
 	<key>entry</key>
 	<dict>
 		<key>cell</key>
-		<string>PSSwitchCell</string>
-		<key>label</key>
-		<string>WGradRemover</string>
-		<key>key</key>
-		<string>enabled</string>
-		<key>default</key>
-		<true/>
-		<key>defaults</key>
-		<string>com.daniilpashin.wgradremover</string>
-		<key>PostNotification</key>
-		<string>com.daniilpashin.wgradremover.prefs.changed</string>
+		<string>PSLinkCell</string>
 		<key>icon</key>
 		<string>WGR_icon.png</string>
+		<key>label</key>
+		<string>WGradRemover</string>
 	</dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Enabled</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.daniilpashin.wgradremover</string>
+			<key>key</key>
+			<string>enabled</string>
+			<key>PostNotification</key>
+			<string>com.daniilpashin.wgradremover.prefs.changed</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Status Bar</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Change colors</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.daniilpashin.wgradremover</string>
+			<key>key</key>
+			<string>chaneSB</string>
+			<key>PostNotification</key>
+			<string>com.daniilpashin.wgradremover.prefs.changed</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Background color</string>
+			<key>footerText</key>
+			<string>Slide left to change background color to black. Slide right to change background color to white.</string>
+			<key>footerAlignment</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.daniilpashin.wgradremover.prefs.changed</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>min</key>
+			<string>0</string>
+			<key>max</key>
+			<string>1</string>
+			<key>default</key>
+			<string>0.75</string>
+			<key>defaults</key>
+			<string>com.daniilpashin.wgradremover</string>
+			<key>key</key>
+			<string>BGValue</string>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<true/>
+			<key>segmentCount</key>
+			<integer>4</integer>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Default value -  0.75</string>
+			<key>footerAlignment</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Foreground color</string>
+			<key>footerText</key>
+			<string>Slide left to change foreground color to black. Slide right to change foreground color to white.</string>
+			<key>footerAlignment</key>
+			<integer>1</integer>
+			<key>alignment</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.daniilpashin.wgradremover.prefs.changed</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>min</key>
+			<string>0</string>
+			<key>max</key>
+			<string>1</string>
+			<key>default</key>
+			<string>0.25</string>
+			<key>defaults</key>
+			<string>com.daniilpashin.wgradremover</string>
+			<key>key</key>
+			<string>FGValue</string>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<true/>
+			<key>segmentCount</key>
+			<integer>4</integer>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Default value - 0.25</string>
+			<key>footerAlignment</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>to make changes</string>
+		</dict>
+		<dict>
+			<key>key</key>
+			<string>respring</string>
+			<key>defaults</key>
+			<string>com.daniilpashin.wgradremover</string>
+			<key>PostNotification</key>
+			<string>com.daniilpashin.wgradremover.respring</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Respring</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>WGradRemover</string>
 </dict>
 </plist>
