@@ -1,3 +1,11 @@
+//
+//  WGradRemover.x
+//  WGradRemover
+//
+//  Created by Daniil Pashin on 22.08.2015
+//  Copyright (c) 2015 Daniil Pashin. All rights reserved.
+//
+
 
 @interface NSUserDefaults (UFS_Category)
 - (id)objectForKey:(NSString *)key inDomain:(NSString *)domain;
