@@ -6,45 +6,36 @@
 //  Copyright (c) 2015 Daniil Pashin. All rights reserved.
 //
 
-
-@interface NSUserDefaults (UFS_Category)
-- (id)objectForKey:(NSString *)key inDomain:(NSString *)domain;
-- (void)setObject:(id)value forKey:(NSString *)key inDomain:(NSString *)domain;
-@end
-
 @interface SpringBoard : UIApplication
 - (void)_relaunchSpringBoardNow;
 @end
 
 
-//  Set default values
-static NSString *notificationString = @"com.daniilpashin.wgradremover.prefs.changed";
-static NSString *respringString = @"com.daniilpashin.wgradremover.respring";
-
-static bool enabled = YES;
-static bool chaneSB = NO;
-static float BGValue = 0.75;
-static float FGValue = 0.25;
+BOOL enabled = YES;
+BOOL enableOverlay = NO;
+float backGroundColorValue = 0.75;
+float foreGroundColorValue = 0.25;
 
 
 
 %hook SBFWallpaperView
 
 //  For iOS 8.2 and lower
-- (bool) _shouldShowTopGradient {
+- (bool) _shouldShowTopGradient
+{
     if (enabled) return NO;
     return %orig;
 }
 
-- (bool) _shouldShowBottomGradient {
+- (bool) _shouldShowBottomGradient
+{
     if (enabled) return NO;
     return %orig;
 }
-
-
 
 //  For iOS 8.3, 8.4, 8.4.1
-- (float) contrast {
+- (float) contrast
+{
     if (enabled) return 0;
     return %orig;
 }
@@ -53,10 +44,9 @@ static float FGValue = 0.25;
 
 
 //  For iOS 9.0
-//  Thanks sinfool for this method
 %hook SBFColorBoxes
-
-- (float) contrast {
+- (float) contrast
+{
     if (enabled) return 0;
     return %orig;
 }
@@ -65,12 +55,12 @@ static float FGValue = 0.25;
 
 //  Chage status bar colors (black & white)
 %hook UIStatusBarNewUIStyleAttributes
-- (void) initWithRequest:(id)request backgroundColor:(id)background foregroundColor:(id)foreground {
-
-    if (enabled && chaneSB) {
-        background = [UIColor colorWithRed:BGValue green:BGValue blue:BGValue alpha:0.5];
-        foreground = [UIColor colorWithRed:FGValue green:FGValue blue:FGValue alpha:1];
-    } else { %orig; }
+- (void) initWithRequest:(id)request backgroundColor:(UIColor *)backColor foregroundColor:(UIColor *)foreColor
+{
+    if (enabled && enableOverlay) {
+        backColor = [UIColor colorWithRed:backGroundColorValue green:backGroundColorValue blue:backGroundColorValue alpha:0.5];
+        foreColor = [UIColor colorWithRed:foreGroundColorValue green:foreGroundColorValue blue:foreGroundColorValue alpha:1];
+    }
 
     %orig;
 }
@@ -80,30 +70,26 @@ static float FGValue = 0.25;
 
 
 
-static void respring(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+static void makeRespring(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+{
     [(SpringBoard *)[UIApplication sharedApplication] _relaunchSpringBoardNow];
 }
 
 
-static void getValues(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+static void reloadPrefs(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+{
+    NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.daniilpashin.wgradremover.plist"];
 
-//  Get values
-    NSNumber *eV = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"enabled" inDomain:@"com.daniilpashin.wgradremover"];
-    NSNumber *cSB = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"chaneSB" inDomain:@"com.daniilpashin.wgradremover"];
-    NSNumber *FG = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"BGValue" inDomain:@"com.daniilpashin.wgradremover"];
-    NSNumber *BG = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"FGValue" inDomain:@"com.daniilpashin.wgradremover"];
-
-    enabled = (eV)? [eV boolValue]:YES;
-    chaneSB = (cSB)? [cSB boolValue]:NO;
-    BGValue = (FG)? [FG floatValue]:0.75;
-    FGValue = (BG)? [BG floatValue]:0.25;
+    enabled = prefs[@"enabled"]?[prefs[@"enabled"] boolValue]:enabled
+    enableOverlay = prefs[@"enabledSBOverlay"]? [prefs[@"enabledSBOverlay" boolValue]:enableOverlay;
+    backGroundColorAlpha = prefs[@"backGroundColorAlpha"]? [prefs[@"backGroundColorAlpha" floatValue]:backGroundColorAlpha;
+    foreGroundAlpha = prefs[@"foreGroundColorAlpha"]? [prefs[@"foreGroundColorAlpha" floatValue]:foreGroundAlpha;
 }
 
-%ctor {
-//    Register tweak for receiving notifications
-    NSAutoreleasePool *pool = [NSAutoreleasePool new];
-    getValues(NULL, NULL, NULL, NULL, NULL);
-    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, getValues, (CFStringRef)notificationString, NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
-    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)respring, (CFStringRef)respringString, NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
-    [pool release];
+
+%ctor
+{
+    reloadPrefs(nil, nil, nil, nil, nil);
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), nil, reloadPrefs, CFSTR("com.daniilpashin.wgradremover.prefs.changed"), nil, CFNotificationSuspensionBehaviorDeliverImmediately);
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), nil, makeRespring, CFSTR("com.daniilpashin.wgradremover.respring"), nil, CFNotificationSuspensionBehaviorDeliverImmediately);
 }
