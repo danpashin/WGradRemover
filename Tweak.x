@@ -58,8 +58,8 @@ float foreGroundColorValue = 0.25;
 - (void) initWithRequest:(id)request backgroundColor:(UIColor *)backColor foregroundColor:(UIColor *)foreColor
 {
     if (enabled && enableOverlay) {
-        backColor = [UIColor colorWithRed:backGroundColorValue green:backGroundColorValue blue:backGroundColorValue alpha:0.5];
-        foreColor = [UIColor colorWithRed:foreGroundColorValue green:foreGroundColorValue blue:foreGroundColorValue alpha:1];
+        backColor = [UIColor colorWithWhite:backGroundColorValue alpha:0.5];
+        foreColor = [UIColor colorWithWhite:foreGroundColorValue alpha:1];
     }
 
     %orig;
@@ -80,10 +80,10 @@ static void reloadPrefs(CFNotificationCenterRef center, void *observer, CFString
 {
     NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.daniilpashin.wgradremover.plist"];
 
-    enabled = prefs[@"enabled"]?[prefs[@"enabled"] boolValue]:enabled
-    enableOverlay = prefs[@"enabledSBOverlay"]? [prefs[@"enabledSBOverlay" boolValue]:enableOverlay;
-    backGroundColorAlpha = prefs[@"backGroundColorAlpha"]? [prefs[@"backGroundColorAlpha" floatValue]:backGroundColorAlpha;
-    foreGroundAlpha = prefs[@"foreGroundColorAlpha"]? [prefs[@"foreGroundColorAlpha" floatValue]:foreGroundAlpha;
+    enabled = prefs[@"enabled"]?[prefs[@"enabled"] boolValue]:enabled;
+    enableOverlay = prefs[@"enableOverlay"]?[prefs[@"enableOverlay"] boolValue]:enableOverlay;
+    backGroundColorValue = prefs[@"backGroundColorValue"]?[prefs[@"backGroundColorValue"] floatValue]:backGroundColorValue;
+    foreGroundColorValue = prefs[@"foreGroundColorValue"]?[prefs[@"foreGroundColorValue"] floatValue]:foreGroundColorValue;
 }
 
 
